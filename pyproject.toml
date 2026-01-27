@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jogo-detetive-john"
+version = "0.1.0"
+description = "Jogo narrativo ASCII com UI KivyMD (desktop-first)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "kivy==2.3.1",
+  "kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip",
+]
+
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv.sources]
+kivymd = { url = "https://github.com/kivymd/KivyMD/archive/master.zip" }
+
+

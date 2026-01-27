@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: jogo-detetive-john
+Version: 0.1.0
+Summary: Jogo narrativo ASCII com UI KivyMD (desktop-first)
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: kivy==2.3.1
+Requires-Dist: kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip
+Dynamic: license-file
