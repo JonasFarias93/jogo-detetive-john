@@ -1,0 +1,53 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# =========================
+# Build / distribuição
+# =========================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# Kivy / KivyMD
+# =========================
+.cache/
+.kivy/
+*.log
+
+# =========================
+# IDEs / Editores
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Testes / Coverage (futuro)
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Assets temporários (opcional)
+# =========================
+# Descomente se gerar assets temporários
+# assets/tmp/
