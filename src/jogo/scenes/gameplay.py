@@ -101,9 +101,12 @@ class GameplayScreen(MDScreen):
                     title="Erro ao obter entry_scene",
                     detail=str(e),
                 )
-                # mesmo em erro, mantém ações limpas pra UI não confundir
                 if self.actions_panel:
                     self.actions_panel.set_actions([])
+                    # se existir, desabilita pra não ter UI “ativa” em erro
+                    if hasattr(self.actions_panel, "set_actions_enabled"):
+                        self.actions_panel.set_actions_enabled(False)
+                    self.actions_panel.set_hint("", typewriter=False)
                 return
 
         try:
@@ -115,6 +118,9 @@ class GameplayScreen(MDScreen):
             )
             if self.actions_panel:
                 self.actions_panel.set_actions([])
+                if hasattr(self.actions_panel, "set_actions_enabled"):
+                    self.actions_panel.set_actions_enabled(False)
+                self.actions_panel.set_hint("", typewriter=False)
             return
         except Exception as e:
             self._render_error(
@@ -123,13 +129,19 @@ class GameplayScreen(MDScreen):
             )
             if self.actions_panel:
                 self.actions_panel.set_actions([])
+                if hasattr(self.actions_panel, "set_actions_enabled"):
+                    self.actions_panel.set_actions_enabled(False)
+                self.actions_panel.set_hint("", typewriter=False)
             return
 
+        # ---------------------------
         # Aplicar na UI (sem rebuild)
-        self.scene_panel.set_text(scene.text)
+        # ---------------------------
+
+        # imagem pode entrar já
         self.scene_panel.set_image(scene.image)
 
-        # AÇÕES: conectar SceneData.actions -> ActionsPanel
+        # prepara AÇÕES (mas travadas durante a digitação)
         if self.actions_panel:
             ui_actions = []
             for act in scene.actions:
@@ -142,7 +154,33 @@ class GameplayScreen(MDScreen):
                 )
             self.actions_panel.set_actions(ui_actions)
 
-        # Status pode mudar via ações; aqui só garantimos que está consistente
+            # trava cliques durante digitação
+            self.actions_panel.set_actions_enabled(False)
+
+            # limpa hint enquanto a cena digita
+            self.actions_panel.set_hint("", typewriter=False)
+
+        # callback: quando o texto terminar, solta botões e mostra hint
+        def _after_scene_text_done():
+            if not self.actions_panel:
+                return
+
+            self.actions_panel.set_actions_enabled(True)
+
+            # hint “de entrada”: usa o hint da 1ª ação (se houver)
+            first_hint = ""
+            if scene.actions:
+                first_hint = (scene.actions[0].hint or "").strip()
+
+            if not first_hint:
+                first_hint = "Escolha. O resto vem depois."
+
+            self.actions_panel.set_hint(first_hint, typewriter=True)
+
+        # texto com typewriter
+        self.scene_panel.set_text(scene.text, typewriter=True, on_done=_after_scene_text_done)
+
+        # Status consistente
         self._refresh_status_panel()
 
     def _on_action_selected(self, action):
@@ -189,5 +227,5 @@ class GameplayScreen(MDScreen):
             "Dica: confira o manifest.json do capítulo (schema, scenes, entry_scene) "
             "e se text_file aponta para um caminho válido."
         )
-        self.scene_panel.set_text(msg)
+        self.scene_panel.set_text(msg, typewriter=False)
         self.scene_panel.set_image("")
