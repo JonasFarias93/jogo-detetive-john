@@ -1,0 +1,60 @@
+{
+  "schema": "chapter-manifest/v1",
+  "meta": {
+    "id": "chapter_01",
+    "title": "Chuva na Cidade",
+    "version": 1
+  },
+  "entry_scene": "intro",
+  "scenes": {
+    "intro": {
+      "text_file": "ascii/intro.txt",
+      "image": "",
+      "actions": [
+        {
+          "key": "1",
+          "label": "[1] Observar o ambiente",
+          "goto": "observe",
+          "hint": "A rua está silenciosa demais."
+        },
+        {
+          "key": "2",
+          "label": "[2] Ir para a delegacia",
+          "goto": "station",
+          "hint": "Luzes e gente… mas também perguntas."
+        },
+        {
+          "key": "3",
+          "label": "[3] Dormir por 2 horas (recupera sono, perde tempo)",
+          "goto": "intro",
+          "effects": { "sono": 15, "energia": 10, "foco": -5, "estresse": -5 },
+          "hint": "O corpo agradece. O tempo cobra."
+        }
+      ]
+    },
+    "observe": {
+      "text": "Você observa a rua. A chuva mascara pegadas, mas não apaga a sensação de estar sendo seguido.",
+      "image": "",
+      "actions": [
+        {
+          "key": "1",
+          "label": "[1] Voltar",
+          "goto": "intro",
+          "hint": "Você volta antes que a noite volte por você."
+        }
+      ]
+    },
+    "station": {
+      "text": "A delegacia cheira a café velho e decisões erradas.",
+      "image": "",
+      "actions": [
+        {
+          "key": "1",
+          "label": "[1] Falar com o plantonista",
+          "goto": "intro",
+          "hint": "Aqui ninguém fala de graça."
+        }
+      ]
+    }
+  }
+}
