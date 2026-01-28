@@ -2,59 +2,171 @@
   "schema": "chapter-manifest/v1",
   "meta": {
     "id": "chapter_01",
-    "title": "Chuva na Cidade",
+    "title": "O Mal Menor",
     "version": 1
   },
-  "entry_scene": "intro",
+  "entry_scene": "scn_01_start",
   "scenes": {
-    "intro": {
-      "text_file": "ascii/intro.txt",
-      "image": "",
+    "scn_01_start": {
+      "text_file": "ascii/scn_01_start.txt",
+      "image": "images/scn_01_start.png",
       "actions": [
         {
           "key": "1",
-          "label": "[1] Observar o ambiente",
-          "goto": "observe",
-          "hint": "A rua está silenciosa demais."
+          "label": "Continuar",
+          "goto": "scn_01_loop_delegacia",
+          "hint": "Seu corpo está aqui. O resto ainda não decidiu aparecer."
+        }
+      ]
+    },
+
+    "scn_01_loop_delegacia": {
+      "text_file": "ascii/scn_01_loop_delegacia.txt",
+      "image": "images/quadro.png",
+      "actions": [
+        {
+          "key": "1",
+          "label": "Ler o relatório",
+          "goto": "scn_01_loop_delegacia",
+          "hint": "O papel pesa mais do que parece.",
+          "effects": { "foco": 2, "energia": -1, "estresse": 1 }
         },
         {
           "key": "2",
-          "label": "[2] Ir para a delegacia",
-          "goto": "station",
-          "hint": "Luzes e gente… mas também perguntas."
+          "label": "Ir ao banheiro",
+          "goto": "scn_01_loop_delegacia",
+          "hint": "O espelho sempre diz mais do que devia.",
+          "effects": { "foco": -1, "energia": -1, "estresse": 2 }
         },
         {
           "key": "3",
-          "label": "[3] Dormir por 2 horas (recupera sono, perde tempo)",
-          "goto": "intro",
-          "effects": { "sono": 15, "energia": 10, "foco": -5, "estresse": -5 },
-          "hint": "O corpo agradece. O tempo cobra."
+          "label": "Acender um cigarro",
+          "goto": "scn_01_loop_delegacia",
+          "hint": "Só um minuto de silêncio.",
+          "effects": { "estresse": -2, "energia": -1, "sono": -1 }
+        },
+        {
+          "key": "4",
+          "label": " Atender ao chamado",
+          "goto": "scn_01_chamado",
+          "hint": "Não soa urgente. Soa inevitável."
         }
       ]
     },
-    "observe": {
-      "text": "Você observa a rua. A chuva mascara pegadas, mas não apaga a sensação de estar sendo seguido.",
+
+    "scn_01_chamado": {
+      "text_file": "ascii/scn_01_chamado.txt",
       "image": "",
       "actions": [
         {
           "key": "1",
-          "label": "[1] Voltar",
-          "goto": "intro",
-          "hint": "Você volta antes que a noite volte por você."
+          "label": "Ir até o local",
+          "goto": "scn_02_apartamento",
+          "hint": "O turno começou. Você não."
         }
       ]
     },
-    "station": {
-      "text": "A delegacia cheira a café velho e decisões erradas.",
+
+    "scn_02_apartamento": {
+      "text_file": "ascii/scn_02_apartamento.txt",
       "image": "",
       "actions": [
         {
           "key": "1",
-          "label": "[1] Falar com o plantonista",
-          "goto": "intro",
-          "hint": "Aqui ninguém fala de graça."
+          "label": "Examinar o relógio (03:17)",
+          "goto": "scn_02_apartamento",
+          "hint": "Ele parou. Você não.",
+          "effects": { "foco": 2, "estresse": 1 }
+        },
+        {
+          "key": "2",
+          "label": "Examinar a porta do banheiro",
+          "goto": "scn_02_apartamento",
+          "hint": "Portas trancadas contam histórias.",
+          "effects": { "foco": 1, "energia": -1 }
+        },
+        {
+          "key": "3",
+          "label": "Ler o bilhete",
+          "goto": "scn_03_bilhete",
+          "hint": "Nem toda explicação é um pedido."
+        },
+        {
+          "key": "4",
+          "label": "Classificar como suicídio",
+          "goto": "scn_05_escolha_final",
+          "hint": "A cidade aceita respostas simples.",
+          "effects": { "estresse": -1, "foco": -1 }
         }
       ]
+    },
+
+    "scn_03_bilhete": {
+      "text_file": "ascii/scn_03_bilhete.txt",
+      "image": "",
+      "actions": [
+        {
+          "key": "1",
+          "label": "Guardar o bilhete",
+          "goto": "scn_02_apartamento",
+          "hint": "Nem toda prova quer ser usada.",
+          "effects": { "estresse": 1, "sono": -1 }
+        },
+        {
+          "key": "2",
+          "label": "Anotar como evidência",
+          "goto": "scn_02_apartamento",
+          "hint": "O papel não vai dormir por você.",
+          "effects": { "foco": 2, "energia": -1, "estresse": 1 }
+        },
+        {
+          "key": "3",
+          "label": "Devolver ao bolso",
+          "goto": "scn_02_apartamento",
+          "hint": "Algumas palavras merecem ficar enterradas.",
+          "effects": { "estresse": -1, "foco": -1 }
+        },
+        {
+          "key": "4",
+          "label": "Voltar para a cena",
+          "goto": "scn_02_apartamento",
+          "hint": "Nada aqui termina de verdade."
+        }
+      ]
+    },
+
+    "scn_05_escolha_final": {
+      "text_file": "ascii/scn_05_escolha_final.txt",
+      "image": "",
+      "actions": [
+        {
+          "key": "1",
+          "label": "Arquivar o caso",
+          "goto": "scn_06_encerramento",
+          "hint": "Ele morreu protegendo alguém.",
+          "effects": { "estresse": -2, "foco": -1 }
+        },
+        {
+          "key": "2",
+          "label": "Reabrir o caso",
+          "goto": "scn_06_encerramento",
+          "hint": "A verdade cobra juros.",
+          "effects": { "foco": 1, "estresse": 2, "energia": -1 }
+        },
+        {
+          "key": "3",
+          "label": "[Ajustar o relatório",
+          "goto": "scn_06_encerramento",
+          "hint": "Você pode controlar o dano.",
+          "effects": { "foco": 2, "estresse": 2, "sono": -2 }
+        }
+      ]
+    },
+
+    "scn_06_encerramento": {
+      "text_file": "ascii/scn_06_encerramento.txt",
+      "image": "",
+      "actions": []
     }
   }
 }
