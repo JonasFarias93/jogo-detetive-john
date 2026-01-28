@@ -1,6 +1,6 @@
-# Arquitetura Gameplay & Contratos de Dados
+# Arquitetura Gameplay, Contratos de Dados & Design Narrativo
 
-> Base para desenvolvimento, expansão e versionamento do jogo.
+> Base para desenvolvimento, expansão e versionamento do jogo **Detetive John**.
 
 ---
 
@@ -219,10 +219,13 @@ Cada ação é um item com:
 * **effects: EffectsData | None**
   Efeitos aplicados ao escolher a ação.
 
+* **hint: str | None**
+  Intuição subjetiva apresentada antes da escolha.
+
 * **conditions: dict | None (Sprint 2+)**
   Regras para mostrar/bloquear ação.
 
-**Regra:** UI não interpreta `goto` nem `effects`. Isso é responsabilidade do `GameplayScreen`.
+**Regra:** UI não interpreta `goto`, `effects` nem `hint`. Isso é responsabilidade do `GameplayScreen`.
 
 ---
 
@@ -244,14 +247,15 @@ Efeitos são **deltas**, nunca valores absolutos:
 ## Chapters (fonte de verdade)
 
 * Definem e retornam `SceneData`
-* Carregam textos (ex: `ascii/intro.txt`)
-* Definem imagens, ações e efeitos
+* Carregam textos (`ascii/*.txt`)
+* Definem imagens, ações, hints e efeitos
 
 ## GameplayScreen (orquestrador)
 
 * Mantém `player_stats` e `current_scene_id`
 * Solicita `SceneData` ao registry
 * Atualiza UI via APIs dos painéis
+* Exibe hint antes da execução da ação
 * Aplica efeitos e transições de cena
 
 ## UI Widgets
@@ -279,11 +283,119 @@ O `registry.py`:
 
 ---
 
-# Critérios de pronto — Tag 0.2.0
+## Parte III — Design Narrativo, Ações e Hints
 
-A tag **0.2.0** pode ser criada quando:
+# Capítulos, Ações e Hints
 
-* Gameplay abre e fecha sem duplicar UI.
-* Status atualiza corretamente quando stats mudam.
-* Cena atualiza texto e imagem sem rebuild completo.
-* Ações renderizam corretamente e disparam callbacks funcionais.
+## Visão geral
+
+No **Detetive John**, capítulos controlam a experiência narrativa.
+A UI é apenas um meio de exibição e **nunca decide nada**.
+
+Tudo que o jogador **vê**, **escolhe** e **sente** vem do **capítulo**.
+
+---
+
+## O que é um Capítulo
+
+Um capítulo é uma pasta **autocontida**:
+
+```
+src/jogo/chapters/chapter_xx/
+```
+
+Contém:
+
+* `manifest.json`
+* textos (`ascii/*.txt`)
+* imagens (opcional)
+
+O capítulo descreve:
+
+* o que acontece
+* quais escolhas existem
+* quais consequências são aplicadas
+
+---
+
+## Estrutura mental
+
+Um capítulo é um **grafo de cenas**:
+
+```
+Cena A
+ ├─ ação 1 → Cena B
+ ├─ ação 2 → Cena C
+ └─ ação 3 → Cena A (loop, custo psicológico)
+```
+
+Não existe cena correta.
+Existe **cena alcançada**.
+
+---
+
+## Hint — a intuição de John
+
+O **hint** é uma dica curta, subjetiva e não confiável.
+
+Ele:
+
+* aparece antes da ação
+* orienta emocionalmente
+* cria tensão
+
+Exemplos:
+
+* “A rua está silenciosa demais.”
+* “O corpo pede descanso. A cidade não espera.”
+
+O hint **não explica regras**. Ele **provoca dúvida**.
+
+---
+
+## Regras de ouro
+
+### Faça
+
+* use hints em decisões ambíguas
+* use efeitos sutis e cumulativos
+* permita loops e hesitação
+
+### Evite
+
+* escolhas boas vs ruins
+* consequências óbvias
+* texto didático
+
+---
+
+# Versionamento e Critérios de Pronto
+
+## Tag 0.2.0 — UI Estável
+
+A tag **0.2.0** representa a estabilização da UI:
+
+* Gameplay abre e fecha sem duplicar UI
+* Layout KV consolidado
+* Status, Cena e Ações renderizam corretamente
+
+---
+
+## Tag 0.2.1 — Ajustes e Refinamentos
+
+A tag **0.2.1** representa ajustes incrementais:
+
+* Correções visuais e de layout
+* Ajustes de fluxo interno
+* Pequenas melhorias sem quebra de contrato
+
+---
+
+## Tag 0.2.2 — Consolidação de Contratos
+
+A tag **0.2.2** pode ser criada quando:
+
+* Status reflete mudanças corretamente
+* Cena atualiza texto e imagem sem rebuild
+* Ações executam fluxo completo (**hint → efeito → transição**)
+* Contratos de dados (SceneData, ActionData, EffectsData) estão estáveis
