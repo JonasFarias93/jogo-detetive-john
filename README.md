@@ -151,7 +151,13 @@ e decidir o que fazer com esse peso.
 
 ## 📜 Licença
 
-🚧 **Licença ainda não definida.**
+Este projeto é **proprietário**.
 
-Este projeto é autoral e está em desenvolvimento.
-A licença será adicionada futuramente, quando o escopo do projeto estiver consolidado.
+Todo o código, textos, narrativa, personagens e documentação
+são protegidos por copyright.
+
+Nenhuma parte pode ser usada, copiada, modificada ou distribuída
+sem autorização expressa do autor.
+
+Consulte o arquivo `LICENSE` para mais detalhes.
+
