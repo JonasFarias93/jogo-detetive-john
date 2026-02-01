@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jogo-detetive-john"
 version = "0.1.0"
-description = "Jogo narrativo ASCII com UI KivyMD (desktop-first)"
+description = "Jogo narrativo ASCII (desktop-first)"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -29,3 +29,7 @@ dev = [
 ]
 
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-q"
