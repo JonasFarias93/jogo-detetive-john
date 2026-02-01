@@ -1,9 +1,4 @@
-from jogo.app.app import DetetiveJohnApp
-
+from jogo.ui_flet.main import run_app
 
 def main() -> None:
-    DetetiveJohnApp().run()
-
-
-if __name__ == "__main__":
-    main()
+    run_app()
