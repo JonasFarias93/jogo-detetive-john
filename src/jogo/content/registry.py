@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
-# Pasta base dos chapters: src/jogo/chapters
+# Pasta base do conteúdo: src/jogo/content
 CHAPTERS_DIR = Path(__file__).resolve().parent
 
 

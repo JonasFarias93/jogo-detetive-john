@@ -23,4 +23,9 @@ where = ["src"]
 [tool.uv.sources]
 kivymd = { url = "https://github.com/kivymd/KivyMD/archive/master.zip" }
 
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
+
 

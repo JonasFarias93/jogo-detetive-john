@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
 
-from jogo.chapters.registry import (
+from jogo.content.registry import (
     ChapterNotFoundError,
     ManifestError,
     SceneNotFoundError,
