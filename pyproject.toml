@@ -26,6 +26,8 @@ kivymd = { url = "https://github.com/kivymd/KivyMD/archive/master.zip" }
 [dependency-groups]
 dev = [
     "pytest>=9.0.2",
+    "flet>=0.25.0",
+
 ]
 
 
