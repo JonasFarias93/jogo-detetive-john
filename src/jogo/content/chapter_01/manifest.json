@@ -155,7 +155,7 @@
         },
         {
           "key": "3",
-          "label": "[Ajustar o relatório",
+          "label": "Ajustar o relatório",
           "goto": "scn_06_encerramento",
           "hint": "Você pode controlar o dano.",
           "effects": { "foco": 2, "estresse": 2, "sono": -2 }
