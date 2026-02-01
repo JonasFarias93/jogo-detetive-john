@@ -9,10 +9,11 @@ def test_load_manifest_chapter_01():
 
 def test_entry_scene_exists():
     entry = registry.get_entry_scene_id("chapter_01")
-    assert isinstance(entry, str) and entry != ""
+    assert isinstance(entry, str)
+    assert entry != ""
 
 
-def test_get_scene_returns_text_and_actions():
+def test_get_scene_returns_scene_data():
     entry = registry.get_entry_scene_id("chapter_01")
     scn = registry.get_scene("chapter_01", entry)
 
