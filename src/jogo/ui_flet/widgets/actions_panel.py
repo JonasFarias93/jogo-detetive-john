@@ -21,8 +21,8 @@ class ActionsPanel:
       [ AÇÕES (scroll) | CONFIG | DICAS (scroll + typewriter) ]
 
     Fix principal:
-    - Trocar Column(scroll=...) por ListView(expand=True)
-      => scrollbar vai pro limite direito do painel (e não “no meio”).
+    - Usar ListView(expand=True) como host do scroll
+      => scrollbar vai pro limite direito do painel.
     """
 
     def __init__(self, page: ft.Page) -> None:
@@ -82,6 +82,13 @@ class ActionsPanel:
         self.set_hint("Passe o olho nas opções.\nCada escolha cobra um preço.", typewriter=False)
 
     # --------------------
+    # Lifecycle / cleanup
+    # --------------------
+    def dispose(self) -> None:
+        """Chamado no fechamento da janela para cancelar tasks penduradas."""
+        self._cancel_typing()
+
+    # --------------------
     # Hint (typewriter)
     # --------------------
     def _cancel_typing(self) -> None:
@@ -98,6 +105,7 @@ class ActionsPanel:
             self._hint_text.opacity = 1
             self.page.update()
 
+        # task "curta"; não precisa guardar referência
         self.page.run_task(_up)
 
     def set_hint(self, text: str, *, typewriter: bool = True, speed: float = 0.02) -> None:
