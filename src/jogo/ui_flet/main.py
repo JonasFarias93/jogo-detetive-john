@@ -23,9 +23,25 @@ def _main(page: ft.Page) -> None:
     layout = AppLayout(page)
     page.add(layout.root)
 
+    # ----------------------------
+    # Cleanup / shutdown hook
+    # ----------------------------
+    def _on_disconnect(_e) -> None:
+        # cancela tasks (typewriter etc.) e libera recursos
+        try:
+            if hasattr(layout.actions, "dispose"):
+                layout.actions.dispose()
+        except Exception:
+            pass
+
+    # dispara quando a sessão é encerrada (janela fechada / desconectou)
+    page.on_disconnect = _on_disconnect
+
+    # ----------------------------
+    # Render loop
+    # ----------------------------
     def render(state: GameState) -> None:
         def on_choose(choice_key: str) -> None:
-            # hint: aparece antes? (se quiser, a gente liga aqui também)
             new_state = engine.choose(choice_key)
             render(new_state)
 
