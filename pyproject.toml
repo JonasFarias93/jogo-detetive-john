@@ -9,9 +9,9 @@ description = "Jogo narrativo ASCII (desktop-first)"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-  "kivy==2.3.1",
-  "kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip",
+  "flet>=0.25,<1.0",
 ]
+
 
 
 [tool.setuptools]
@@ -19,9 +19,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.uv.sources]
-kivymd = { url = "https://github.com/kivymd/KivyMD/archive/master.zip" }
 
 [dependency-groups]
 dev = [
